@@ -229,7 +229,7 @@ ReturnType qt_msgSendSuper(id receiver, SEL selector, Args... args)
     objc_super sup = { receiver, [receiver superclass] };
     return superFn(&sup, selector, args...);
 }
-
+#if !defined(Q_PROCESSOR_ARM_64)
 template <typename ReturnType, typename... Args>
 ReturnType qt_msgSendSuper_stret(id receiver, SEL selector, Args... args)
 {
@@ -244,6 +244,7 @@ ReturnType qt_msgSendSuper_stret(id receiver, SEL selector, Args... args)
     superStretFn(&ret, &sup, selector, args...);
     return ret;
 }
+#endif
 
 template<typename... Args>
 class QSendSuperHelper {
